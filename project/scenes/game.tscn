@@ -1,0 +1,170 @@
+[gd_scene format=3 uid="uid://dqvctvart0alk"]
+
+[ext_resource type="Script" uid="uid://cf3bgnuii6rfk" path="res://scripts/game.gd" id="1_uwrxv"]
+[ext_resource type="Texture2D" uid="uid://cixa3q20hi7nr" path="res://assets/test_border.png" id="3_lnu2h"]
+[ext_resource type="FontFile" uid="uid://dmqgcevs7qrc8" path="res://assets/Zerove-Regular.otf" id="4_lbhrr"]
+
+[sub_resource type="FontVariation" id="FontVariation_iywne"]
+base_font = ExtResource("4_lbhrr")
+spacing_glyph = 2
+
+[sub_resource type="Shader" id="Shader_ii47s"]
+code = "shader_type canvas_item;
+
+uniform sampler2D t0 : hint_screen_texture;
+uniform float bloom_spread = 1;
+uniform float bloom_intensity = 2;
+
+void fragment() {
+	ivec2 size = textureSize(t0, 0);
+
+    float uv_x = SCREEN_UV.x * float(size.x);
+    float uv_y = SCREEN_UV.y * float(size.y);
+
+    vec4 sum = vec4(0.0);
+    for (int n = 0; n < 9; ++n) {
+        uv_y = (SCREEN_UV.y * float(size.y)) + float(bloom_spread * float(n - 4));
+        vec4 h_sum = vec4(0.0);
+        h_sum += texelFetch(t0, ivec2(int(uv_x) - int(4.0 * bloom_spread), int(uv_y)), 0);
+        h_sum += texelFetch(t0, ivec2(int(uv_x) - int(3.0 * bloom_spread), int(uv_y)), 0);
+        h_sum += texelFetch(t0, ivec2(int(uv_x) - int(2.0 * bloom_spread), int(uv_y)), 0);
+        h_sum += texelFetch(t0, ivec2(int(uv_x) - int(bloom_spread), int(uv_y)), 0);
+        h_sum += texelFetch(t0, ivec2(int(uv_x), int(uv_y)), 0);
+        h_sum += texelFetch(t0, ivec2(int(uv_x) + int(bloom_spread), int(uv_y)), 0);
+        h_sum += texelFetch(t0, ivec2(int(uv_x) + int(2.0 * bloom_spread), int(uv_y)), 0);
+        h_sum += texelFetch(t0, ivec2(int(uv_x) + int(3.0 * bloom_spread), int(uv_y)), 0);
+        h_sum += texelFetch(t0, ivec2(int(uv_x) + int(4.0 * bloom_spread), int(uv_y)), 0);
+        sum += h_sum / 9.0;
+    }
+
+    COLOR = texture(t0, SCREEN_UV) + ((sum / 9.0) * bloom_intensity);
+}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8kj3l"]
+shader = SubResource("Shader_ii47s")
+shader_parameter/bloom_spread = 1.0
+shader_parameter/bloom_intensity = 1.0
+
+[node name="game" type="Node2D" unique_id=567266147]
+script = ExtResource("1_uwrxv")
+
+[node name="sub_window" type="Window" parent="." unique_id=639219254]
+transparent_bg = true
+oversampling_override = 1.0
+mode = 2
+title = "balls"
+initial_position = 2
+size = Vector2i(500, 500)
+unresizable = true
+borderless = true
+transparent = true
+mouse_passthrough = true
+minimize_disabled = true
+maximize_disabled = true
+
+[node name="NinePatchRect" type="NinePatchRect" parent="sub_window" unique_id=1178350244]
+texture_filter = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 6
+size_flags_vertical = 6
+texture = ExtResource("3_lnu2h")
+draw_center = false
+patch_margin_left = 50
+patch_margin_top = 50
+patch_margin_right = 50
+patch_margin_bottom = 50
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
+
+[node name="RichTextLabel" type="RichTextLabel" parent="sub_window" unique_id=1930859670]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 100.0
+offset_top = 100.0
+offset_right = -100.0
+offset_bottom = -100.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_colors/default_color = Color(1, 0, 0, 0.25)
+theme_override_fonts/normal_font = SubResource("FontVariation_iywne")
+theme_override_font_sizes/normal_font_size = 64
+text = "background... background... background... background... background... background... background... background... background... background... background... background... background... background... background... background... background... background... background... background... background... background... background... background... background... background... background... background... background... background... background... background... background... background... background... background... background... background... background... background... background... background... background... background... background... background... background... background... background... background... background... background... background... background... background... background... background... background... background... background... background... background... background... background... background... background... background... background... background... background... background... background... background... background... background... background... background... background... background... background... "
+scroll_active = false
+autowrap_mode = 1
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=911932420]
+visible = false
+material = SubResource("ShaderMaterial_8kj3l")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -450.0
+offset_top = -258.0
+offset_right = 424.0
+offset_bottom = 242.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=982456837]
+anchor_mode = 0
+
+[node name="Control" type="Control" parent="." unique_id=769190548]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 1280.0
+offset_bottom = 720.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="ColorRect" type="ColorRect" parent="Control" unique_id=479999152]
+custom_minimum_size = Vector2(500, 0)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 1, 0.5)
+
+[node name="ColorRect2" type="ColorRect" parent="Control" unique_id=1907396013]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -200.0
+offset_top = -200.0
+offset_right = 200.0
+offset_bottom = 200.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="OptionButton" type="OptionButton" parent="Control/ColorRect2" unique_id=89672583]
+layout_mode = 0
+offset_right = 400.0
+offset_bottom = 20.0
+selected = 1
+item_count = 3
+popup/item_0/text = "1600x900"
+popup/item_0/id = 0
+popup/item_1/text = "1280x720"
+popup/item_1/id = 1
+popup/item_2/text = "800x450"
+popup/item_2/id = 2
+
+[connection signal="item_selected" from="Control/ColorRect2/OptionButton" to="." method="_on_option_button_item_selected"]
