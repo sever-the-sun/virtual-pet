@@ -1,0 +1,41 @@
+[gd_scene format=3 uid="uid://pi2snby87if6"]
+
+[ext_resource type="Texture2D" uid="uid://0jpbwhjcirx7" path="res://assets/desktop/red-folder.svg" id="1_en31l"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8kj3l"]
+size = Vector2(48, 48)
+
+[sub_resource type="LabelSettings" id="LabelSettings_ii47s"]
+font_size = 12
+outline_size = 2
+outline_color = Color(1, 1, 1, 0.5)
+stacked_outline_count = 1
+stacked_outline_0/size = 4
+stacked_outline_0/color = Color(1, 1, 1, 0.2509804)
+
+[node name="desktop_item" type="StaticBody2D" unique_id=323489899]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1518101773]
+shape = SubResource("RectangleShape2D_8kj3l")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1465082647]
+scale = Vector2(-1, 1)
+texture = ExtResource("1_en31l")
+
+[node name="Label" type="Label" parent="." unique_id=867877624]
+custom_minimum_size = Vector2(80, 64)
+custom_maximum_size = Vector2(80, 64)
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -72.0
+offset_top = 24.0
+offset_right = 72.0
+offset_bottom = 88.0
+grow_horizontal = 2
+scale = Vector2(-1, 1)
+pivot_offset_ratio = Vector2(0.5, 0.5)
+text = "new folder"
+label_settings = SubResource("LabelSettings_ii47s")
+horizontal_alignment = 1
+autowrap_mode = 1

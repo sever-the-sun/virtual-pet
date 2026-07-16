@@ -1,0 +1,25 @@
+[gd_scene format=3 uid="uid://dn7if0lf2w4c0"]
+
+[sub_resource type="Environment" id="Environment_8kj3l"]
+ambient_light_energy = 0.0
+reflected_light_source = 1
+
+[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_ii47s"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_x2l7t"]
+
+[node name="real_world" type="Node3D" unique_id=1993769495]
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=167830061]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.1289766)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=394580494]
+environment = SubResource("Environment_8kj3l")
+camera_attributes = SubResource("CameraAttributesPractical_ii47s")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=169003894]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.7728263)
+mesh = SubResource("BoxMesh_x2l7t")
+
+[node name="AreaLight3D" type="AreaLight3D" parent="." unique_id=1528902267]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.2823224)

@@ -1,12 +1,51 @@
 [gd_scene format=3 uid="uid://dqvctvart0alk"]
 
 [ext_resource type="Script" uid="uid://cf3bgnuii6rfk" path="res://scripts/game.gd" id="1_uwrxv"]
-[ext_resource type="Texture2D" uid="uid://cixa3q20hi7nr" path="res://assets/test_border.png" id="3_lnu2h"]
-[ext_resource type="FontFile" uid="uid://dmqgcevs7qrc8" path="res://assets/Zerove-Regular.otf" id="4_lbhrr"]
+[ext_resource type="Texture2D" uid="uid://ciqiktltd0vbk" path="res://assets/background.png" id="2_p57ef"]
+[ext_resource type="Texture2D" uid="uid://bah4tfoosng6m" path="res://assets/virtual-pet-human-test.png" id="3_u5sy4"]
+[ext_resource type="PackedScene" uid="uid://da0gxvqnaei04" path="res://scenes/player.tscn" id="4_iywne"]
+[ext_resource type="FontFile" uid="uid://b3fw425iucgia" path="res://assets/Beholden-Italic.ttf" id="4_u5sy4"]
+[ext_resource type="PackedScene" uid="uid://pi2snby87if6" path="res://scenes/desktop_item.tscn" id="5_iywne"]
+
+[sub_resource type="Gradient" id="Gradient_lbhrr"]
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_iywne"]
+gradient = SubResource("Gradient_lbhrr")
 
 [sub_resource type="FontVariation" id="FontVariation_iywne"]
-base_font = ExtResource("4_lbhrr")
-spacing_glyph = 2
+base_font = ExtResource("4_u5sy4")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_u5sy4"]
+bg_color = Color(0, 0, 0, 0.25)
+border_width_left = 16
+border_width_top = 8
+border_width_right = 16
+border_width_bottom = 8
+border_color = Color(0, 0, 0, 0)
+border_blend = true
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_ii47s"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_iywne"]
+normal = Vector2(1, 0)
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_lbhrr"]
+normal = Vector2(-1, 0)
+
+[sub_resource type="Shader" id="Shader_lbhrr"]
+code = "shader_type canvas_item;
+
+uniform float blur_amount : hint_range(0, 5);
+uniform sampler2D screen_texture : hint_screen_texture, filter_linear_mipmap;
+void fragment() {
+	COLOR = texture(screen_texture, SCREEN_UV) + textureLod(screen_texture, SCREEN_UV, blur_amount);
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_iywne"]
+shader = SubResource("Shader_lbhrr")
+shader_parameter/blur_amount = 5.0
 
 [sub_resource type="Shader" id="Shader_ii47s"]
 code = "shader_type canvas_item;
@@ -14,6 +53,8 @@ code = "shader_type canvas_item;
 uniform sampler2D t0 : hint_screen_texture;
 uniform float bloom_spread = 1;
 uniform float bloom_intensity = 2;
+
+uniform float blur_amount : hint_range(0, 5);
 
 void fragment() {
 	ivec2 size = textureSize(t0, 0);
@@ -37,14 +78,19 @@ void fragment() {
         sum += h_sum / 9.0;
     }
 
-    COLOR = texture(t0, SCREEN_UV) + ((sum / 9.0) * bloom_intensity);
+	COLOR = texture(t0, SCREEN_UV) + ((sum / 9.0) * bloom_intensity);
+	COLOR += textureLod(t0, SCREEN_UV, blur_amount);
+	
+	//COLOR.a = 1.0;
+	//COLOR.a = pow(COLOR.a, 0.2);
 }
 "
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_8kj3l"]
 shader = SubResource("Shader_ii47s")
 shader_parameter/bloom_spread = 1.0
-shader_parameter/bloom_intensity = 1.0
+shader_parameter/bloom_intensity = 0.5
+shader_parameter/blur_amount = 1.0000000475
 
 [node name="game" type="Node2D" unique_id=567266147]
 script = ExtResource("1_uwrxv")
@@ -52,10 +98,8 @@ script = ExtResource("1_uwrxv")
 [node name="sub_window" type="Window" parent="." unique_id=639219254]
 transparent_bg = true
 oversampling_override = 1.0
-mode = 2
-title = "balls"
 initial_position = 2
-size = Vector2i(500, 500)
+size = Vector2i(1680, 1320)
 unresizable = true
 borderless = true
 transparent = true
@@ -63,7 +107,31 @@ mouse_passthrough = true
 minimize_disabled = true
 maximize_disabled = true
 
+[node name="background" type="TextureRect" parent="sub_window" unique_id=955185474]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_p57ef")
+expand_mode = 1
+
+[node name="background2" type="TextureRect" parent="sub_window" unique_id=8758504]
+visible = false
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 200.0
+offset_top = 200.0
+offset_right = -200.0
+offset_bottom = -400.0
+grow_horizontal = 2
+grow_vertical = 0
+texture = ExtResource("3_u5sy4")
+expand_mode = 1
+
 [node name="NinePatchRect" type="NinePatchRect" parent="sub_window" unique_id=1178350244]
+visible = false
 texture_filter = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -72,50 +140,40 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 6
 size_flags_vertical = 6
-texture = ExtResource("3_lnu2h")
-draw_center = false
-patch_margin_left = 50
-patch_margin_top = 50
-patch_margin_right = 50
-patch_margin_bottom = 50
+texture = SubResource("GradientTexture2D_iywne")
+patch_margin_left = 100
+patch_margin_top = 100
+patch_margin_right = 100
+patch_margin_bottom = 100
 axis_stretch_horizontal = 1
 axis_stretch_vertical = 1
 
-[node name="RichTextLabel" type="RichTextLabel" parent="sub_window" unique_id=1930859670]
-anchors_preset = 15
+[node name="dialogue" type="RichTextLabel" parent="sub_window" unique_id=1930859670]
+custom_maximum_size = Vector2(1530, 300)
+anchors_preset = -1
+anchor_top = 0.735
 anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 100.0
-offset_top = 100.0
-offset_right = -100.0
-offset_bottom = -100.0
+anchor_bottom = 0.735
+offset_left = 75.0
+offset_top = -0.2000122
+offset_right = -75.0
+offset_bottom = -0.2000122
 grow_horizontal = 2
-grow_vertical = 2
 pivot_offset_ratio = Vector2(0.5, 0.5)
 size_flags_horizontal = 4
 size_flags_vertical = 4
-theme_override_colors/default_color = Color(1, 0, 0, 0.25)
 theme_override_fonts/normal_font = SubResource("FontVariation_iywne")
-theme_override_font_sizes/normal_font_size = 64
-text = "background... background... background... background... background... background... background... background... background... background... background... background... background... background... background... background... background... background... background... background... background... background... background... background... background... background... background... background... background... background... background... background... background... background... background... background... background... background... background... background... background... background... background... background... background... background... background... background... background... background... background... background... background... background... background... background... background... background... background... background... background... background... background... background... background... background... background... background... background... background... background... background... background... background... background... background... background... background... background... background... "
+theme_override_font_sizes/normal_font_size = 32
+theme_override_styles/normal = SubResource("StyleBoxFlat_u5sy4")
+fit_content = true
 scroll_active = false
-autowrap_mode = 1
-
-[node name="ColorRect" type="ColorRect" parent="." unique_id=911932420]
-visible = false
-material = SubResource("ShaderMaterial_8kj3l")
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -450.0
-offset_top = -258.0
-offset_right = 424.0
-offset_bottom = 242.0
-grow_horizontal = 2
-grow_vertical = 2
+autowrap_mode = 2
+shortcut_keys_enabled = false
+horizontal_alignment = 1
+visible_characters_behavior = 1
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=982456837]
-anchor_mode = 0
+position = Vector2(640, 360)
 
 [node name="Control" type="Control" parent="." unique_id=769190548]
 layout_mode = 3
@@ -131,6 +189,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="ColorRect" type="ColorRect" parent="Control" unique_id=479999152]
+visible = false
 custom_minimum_size = Vector2(500, 0)
 layout_mode = 1
 anchors_preset = 15
@@ -141,6 +200,7 @@ grow_vertical = 2
 color = Color(0, 0, 1, 0.5)
 
 [node name="ColorRect2" type="ColorRect" parent="Control" unique_id=1907396013]
+visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -167,4 +227,219 @@ popup/item_1/id = 1
 popup/item_2/text = "800x450"
 popup/item_2/id = 2
 
+[node name="floor" type="StaticBody2D" parent="." unique_id=129174750]
+position = Vector2(640, 720)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="floor" unique_id=2044763147]
+shape = SubResource("WorldBoundaryShape2D_ii47s")
+
+[node name="walls" type="StaticBody2D" parent="." unique_id=1034208129]
+position = Vector2(640, 720)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="walls" unique_id=1804167692]
+position = Vector2(-640, 0)
+shape = SubResource("WorldBoundaryShape2D_iywne")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="walls" unique_id=1675103423]
+position = Vector2(640, 0)
+shape = SubResource("WorldBoundaryShape2D_lbhrr")
+
+[node name="player" parent="." unique_id=318196448 instance=ExtResource("4_iywne")]
+position = Vector2(640, 696)
+
+[node name="desktop_initial" type="Node2D" parent="." unique_id=63402904]
+
+[node name="desktop_item" parent="desktop_initial" unique_id=323489899 instance=ExtResource("5_iywne")]
+position = Vector2(40, 120)
+metadata/_edit_group_ = true
+
+[node name="desktop_item2" parent="desktop_initial" unique_id=1072110981 instance=ExtResource("5_iywne")]
+position = Vector2(40, 200)
+metadata/_edit_group_ = true
+
+[node name="desktop_item3" parent="desktop_initial" unique_id=1316905591 instance=ExtResource("5_iywne")]
+position = Vector2(120, 120)
+metadata/_edit_group_ = true
+
+[node name="desktop_item4" parent="desktop_initial" unique_id=1249216872 instance=ExtResource("5_iywne")]
+position = Vector2(120, 200)
+metadata/_edit_group_ = true
+
+[node name="desktop_item5" parent="desktop_initial" unique_id=382144972 instance=ExtResource("5_iywne")]
+position = Vector2(200, 40)
+metadata/_edit_group_ = true
+
+[node name="desktop_item6" parent="desktop_initial" unique_id=49228565 instance=ExtResource("5_iywne")]
+position = Vector2(200, 120)
+metadata/_edit_group_ = true
+
+[node name="desktop_item7" parent="desktop_initial" unique_id=2097598632 instance=ExtResource("5_iywne")]
+position = Vector2(200, 200)
+metadata/_edit_group_ = true
+
+[node name="desktop_item8" parent="desktop_initial" unique_id=2007723303 instance=ExtResource("5_iywne")]
+position = Vector2(280, 120)
+metadata/_edit_group_ = true
+
+[node name="desktop_item9" parent="desktop_initial" unique_id=1662445527 instance=ExtResource("5_iywne")]
+position = Vector2(360, 120)
+metadata/_edit_group_ = true
+
+[node name="desktop_item10" parent="desktop_initial" unique_id=693080359 instance=ExtResource("5_iywne")]
+position = Vector2(360, 200)
+metadata/_edit_group_ = true
+
+[node name="desktop_item11" parent="desktop_initial" unique_id=1500655125 instance=ExtResource("5_iywne")]
+position = Vector2(440, 40)
+metadata/_edit_group_ = true
+
+[node name="desktop_item12" parent="desktop_initial" unique_id=682899487 instance=ExtResource("5_iywne")]
+position = Vector2(440, 120)
+metadata/_edit_group_ = true
+
+[node name="desktop_item13" parent="desktop_initial" unique_id=1909825739 instance=ExtResource("5_iywne")]
+position = Vector2(520, 120)
+metadata/_edit_group_ = true
+
+[node name="desktop_item14" parent="desktop_initial" unique_id=771205512 instance=ExtResource("5_iywne")]
+position = Vector2(520, 120)
+metadata/_edit_group_ = true
+
+[node name="desktop_item15" parent="desktop_initial" unique_id=2146111174 instance=ExtResource("5_iywne")]
+position = Vector2(600, 40)
+metadata/_edit_group_ = true
+
+[node name="desktop_item16" parent="desktop_initial" unique_id=1998328137 instance=ExtResource("5_iywne")]
+position = Vector2(600, 120)
+metadata/_edit_group_ = true
+
+[node name="desktop_item17" parent="desktop_initial" unique_id=266330035 instance=ExtResource("5_iywne")]
+position = Vector2(600, 200)
+metadata/_edit_group_ = true
+
+[node name="desktop_item18" parent="desktop_initial" unique_id=1481280701 instance=ExtResource("5_iywne")]
+position = Vector2(760, 40)
+metadata/_edit_group_ = true
+
+[node name="desktop_item19" parent="desktop_initial" unique_id=534013712 instance=ExtResource("5_iywne")]
+position = Vector2(840, 120)
+metadata/_edit_group_ = true
+
+[node name="desktop_item20" parent="desktop_initial" unique_id=1457768429 instance=ExtResource("5_iywne")]
+position = Vector2(840, 200)
+metadata/_edit_group_ = true
+
+[node name="desktop_item21" parent="desktop_initial" unique_id=1408566529 instance=ExtResource("5_iywne")]
+position = Vector2(840, 280)
+metadata/_edit_group_ = true
+
+[node name="desktop_item22" parent="desktop_initial" unique_id=1775362118 instance=ExtResource("5_iywne")]
+position = Vector2(840, 360)
+metadata/_edit_group_ = true
+
+[node name="desktop_item23" parent="desktop_initial" unique_id=2134125195 instance=ExtResource("5_iywne")]
+position = Vector2(920, 40)
+metadata/_edit_group_ = true
+
+[node name="desktop_item24" parent="desktop_initial" unique_id=1384811704 instance=ExtResource("5_iywne")]
+position = Vector2(920, 120)
+metadata/_edit_group_ = true
+
+[node name="desktop_item25" parent="desktop_initial" unique_id=1152273589 instance=ExtResource("5_iywne")]
+position = Vector2(920, 280)
+metadata/_edit_group_ = true
+
+[node name="desktop_item26" parent="desktop_initial" unique_id=1594472968 instance=ExtResource("5_iywne")]
+position = Vector2(1000, 200)
+metadata/_edit_group_ = true
+
+[node name="desktop_item27" parent="desktop_initial" unique_id=1852485132 instance=ExtResource("5_iywne")]
+position = Vector2(1000, 280)
+metadata/_edit_group_ = true
+
+[node name="desktop_item28" parent="desktop_initial" unique_id=1405738787 instance=ExtResource("5_iywne")]
+position = Vector2(1080, 200)
+metadata/_edit_group_ = true
+
+[node name="desktop_item29" parent="desktop_initial" unique_id=220511688 instance=ExtResource("5_iywne")]
+position = Vector2(1160, 40)
+metadata/_edit_group_ = true
+
+[node name="desktop_item30" parent="desktop_initial" unique_id=1283606650 instance=ExtResource("5_iywne")]
+position = Vector2(1160, 120)
+metadata/_edit_group_ = true
+
+[node name="desktop_item31" parent="desktop_initial" unique_id=424962875 instance=ExtResource("5_iywne")]
+position = Vector2(1240, 40)
+metadata/_edit_group_ = true
+
+[node name="desktop_item32" parent="desktop_initial" unique_id=1222547600 instance=ExtResource("5_iywne")]
+position = Vector2(1240, 120)
+metadata/_edit_group_ = true
+
+[node name="desktop_item33" parent="desktop_initial" unique_id=670847580 instance=ExtResource("5_iywne")]
+position = Vector2(1240, 280)
+metadata/_edit_group_ = true
+
+[node name="filter_blur" type="ColorRect" parent="." unique_id=388372299]
+visible = false
+material = SubResource("ShaderMaterial_iywne")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 1280.0
+offset_bottom = 720.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="filter_bloom" type="ColorRect" parent="." unique_id=911932420]
+material = SubResource("ShaderMaterial_8kj3l")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 1280.0
+offset_bottom = 720.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="text_pass" type="Timer" parent="." unique_id=406114521]
+wait_time = 0.009999999999999998
+
+[node name="line_pass" type="Timer" parent="." unique_id=739941819]
+wait_time = 0.009999999999999998
+
 [connection signal="item_selected" from="Control/ColorRect2/OptionButton" to="." method="_on_option_button_item_selected"]
+
+[editable path="desktop_initial/desktop_item"]
+[editable path="desktop_initial/desktop_item2"]
+[editable path="desktop_initial/desktop_item3"]
+[editable path="desktop_initial/desktop_item4"]
+[editable path="desktop_initial/desktop_item5"]
+[editable path="desktop_initial/desktop_item6"]
+[editable path="desktop_initial/desktop_item7"]
+[editable path="desktop_initial/desktop_item8"]
+[editable path="desktop_initial/desktop_item9"]
+[editable path="desktop_initial/desktop_item10"]
+[editable path="desktop_initial/desktop_item11"]
+[editable path="desktop_initial/desktop_item12"]
+[editable path="desktop_initial/desktop_item13"]
+[editable path="desktop_initial/desktop_item14"]
+[editable path="desktop_initial/desktop_item15"]
+[editable path="desktop_initial/desktop_item16"]
+[editable path="desktop_initial/desktop_item17"]
+[editable path="desktop_initial/desktop_item18"]
+[editable path="desktop_initial/desktop_item19"]
+[editable path="desktop_initial/desktop_item20"]
+[editable path="desktop_initial/desktop_item21"]
+[editable path="desktop_initial/desktop_item22"]
+[editable path="desktop_initial/desktop_item23"]
+[editable path="desktop_initial/desktop_item24"]
+[editable path="desktop_initial/desktop_item25"]
+[editable path="desktop_initial/desktop_item26"]
+[editable path="desktop_initial/desktop_item27"]
+[editable path="desktop_initial/desktop_item28"]
+[editable path="desktop_initial/desktop_item29"]
+[editable path="desktop_initial/desktop_item30"]
+[editable path="desktop_initial/desktop_item31"]
+[editable path="desktop_initial/desktop_item32"]
+[editable path="desktop_initial/desktop_item33"]

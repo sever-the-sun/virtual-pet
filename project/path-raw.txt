@@ -1,0 +1,19 @@
+<initial-a>
+initial 1
+
+initial 2
+[MEOW] -> initial-b
+[HISS] -> initial-c
+---
+<initial-b>
+initial 3
+
+initial 4
+[HISS] -> initial-c
+---
+<initial-c>
+wah
+
+wah
+[MEOW] -> initial-a
+---
