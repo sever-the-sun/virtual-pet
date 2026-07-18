@@ -11,6 +11,7 @@ var flag_dict: Dictionary[String, bool] = {
 
 var accepting_next_line: bool = false
 
+var next_event: StoryPath.ACTIONS = StoryPath.ACTIONS.EMPTY
 
 @onready var window: Window = get_window()
 @onready var sub_window: Window = $sub_window
@@ -19,6 +20,10 @@ var accepting_next_line: bool = false
 @onready var text_pass: Timer = $text_pass
 @onready var line_pass: Timer = $line_pass
 @onready var nothing_timer: Timer = $nothing_timer
+
+@onready var user_bg: Sprite2D = $sub_window/user_bg
+@onready var user: AnimatedSprite2D = $sub_window/user
+
 
 
 const RESOLUTIONS: Array[Vector2i] = [
@@ -59,23 +64,56 @@ func _on_window_focus_exited() -> void:
 func _on_option_button_item_selected(index: int) -> void:
 	window.size = RESOLUTIONS[index]
 
-func _input(event: InputEvent) -> void:
+#func _input(event: InputEvent) -> void:
+	#
+	#if accepting_next_line:
+		#if Input.is_action_just_pressed(&"meow"):
+			#get_next_path(StoryPath.ACTIONS.MEOW)
+		#if Input.is_action_just_pressed(&"hiss"):
+			#get_next_path(StoryPath.ACTIONS.HISS)
+
+func meow() -> void:
 	if accepting_next_line:
-		if Input.is_action_just_pressed(&"meow"):
-			get_next_path(StoryPath.ACTIONS.MEOW)
-		if Input.is_action_just_pressed(&"hiss"):
-			get_next_path(StoryPath.ACTIONS.HISS)
+		get_next_path(StoryPath.ACTIONS.MEOW)
+	else:
+		pass
+func hiss() -> void:
+	if accepting_next_line:
+		get_next_path(StoryPath.ACTIONS.HISS)
+	else:
+		pass
+
+
 
 func update_flags_before_dialogue(flag_array: Array[String]) -> void:
-	print(flag_array)
-
-func update_flags_after_dialogue(flag_array: Array[String]) -> void:
-	print(flag_array)
 	for flag in flag_array:
 		match flag:
+			"anim-focus":
+				user.play(&"focus")
+			"anim-head-tilt":
+				user.play(&"head-tilt")
+			"anim-look-closer":
+				user.play(&"look-closer")
+			"anim-look-reasonable":
+				user.play(&"look-reasonable")
+			"anim-turn-away":
+				user.play(&"turn-away")
+			"anim-wake-up":
+				user.play(&"wake-up-a")
+			"anim-head-tilt-reverse-conditional":
+				if user.animation == &"head-tilt":
+					user.play_backwards(&"head-tilt")
+			"anim-turn-away-reverse-conditional":
+				if user.animation == &"turn-away":
+					user.play_backwards(&"turn-away")
 			"bother1":
-						$Area2D/CollisionShape2D.set_deferred(&"disabled", false)
+				$Area2D/CollisionShape2D.set_deferred(&"disabled", false)
 
+func update_flags_after_dialogue(flag_array: Array[String]) -> void:
+	pass
+	#for flag in flag_array:
+		#match flag:
+			#
 func next_path() -> void:
 	accepting_next_line = false
 	current_path.line = 0
@@ -96,7 +134,13 @@ func next_path() -> void:
 	accepting_next_line = true
 	nothing_timer.start()
 	player.has_not_moved = true
-
+	if current_path.action_array.is_empty():
+		print("okay we've reached an end???")
+	elif current_path.action_array[0] == StoryPath.ACTIONS.EMPTY:
+		get_next_path(StoryPath.ACTIONS.EMPTY)
+	elif next_event == StoryPath.ACTIONS.BOTHER:
+		next_event = StoryPath.ACTIONS.EMPTY
+		get_next_path(StoryPath.ACTIONS.BOTHER)
 func _on_nothing_timer_timeout() -> void:
 	if accepting_next_line:
 		if player.has_not_moved:
@@ -114,6 +158,7 @@ func render_line(text: String) -> void:
 			text_pass.wait_time = 0.5
 		else:
 			text_pass.wait_time = 0.05
+		text_pass.wait_time *= 0.1
 		text_pass.start()
 		await text_pass.timeout
 
@@ -132,10 +177,10 @@ func get_next_path(action: StoryPath.ACTIONS):
 
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
-	print("what")
-	print(body.is_in_group(&"player"))
-	print(accepting_next_line)
 	if accepting_next_line:
 		$Area2D/CollisionShape2D.set_deferred(&"disabled", true)
-		
 		get_next_path(StoryPath.ACTIONS.BOTHER)
+	else:
+		$Area2D/CollisionShape2D.set_deferred(&"disabled", true)
+		next_event = StoryPath.ACTIONS.BOTHER
+		print("primed")

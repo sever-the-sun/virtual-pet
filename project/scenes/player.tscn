@@ -2,6 +2,8 @@
 
 [ext_resource type="Script" uid="uid://g4lhmphbaxp4" path="res://scripts/player.gd" id="1_g2els"]
 [ext_resource type="Texture2D" uid="uid://b4fubgvo4dxnt" path="res://assets/pet.png" id="2_g2els"]
+[ext_resource type="AudioStream" uid="uid://bv8bqivr7t548" path="res://assets/audio/hiss.wav" id="3_dqkch"]
+[ext_resource type="AudioStream" uid="uid://dvkm2ehkl0qgm" path="res://assets/audio/meow.wav" id="4_qlg0r"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_qhqgy"]
 atlas = ExtResource("2_g2els")
@@ -180,6 +182,35 @@ tracks/2/keys = {
 "method": &"play"
 }]
 }
+tracks/3/type = "audio"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("sound")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"clips": [{
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("3_dqkch")
+}],
+"times": PackedFloat32Array(0)
+}
+tracks/3/use_blend = true
+tracks/4/type = "method"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath(".")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0.75),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [false],
+"method": &"make_noise"
+}]
+}
 
 [sub_resource type="Animation" id="Animation_qhqgy"]
 resource_name = "meow"
@@ -223,6 +254,35 @@ tracks/2/keys = {
 "method": &"play"
 }]
 }
+tracks/3/type = "audio"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("sound")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"clips": [{
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("4_qlg0r")
+}],
+"times": PackedFloat32Array(0)
+}
+tracks/3/use_blend = true
+tracks/4/type = "method"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath(".")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0.75),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [true],
+"method": &"make_noise"
+}]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_dqkch"]
 _data = {
@@ -240,7 +300,6 @@ script = ExtResource("1_g2els")
 scale = Vector2(3, 3)
 sprite_frames = SubResource("SpriteFrames_8kj3l")
 animation = &"hiss"
-frame_progress = 0.32910755
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1690722410]
 shape = SubResource("RectangleShape2D_g2els")

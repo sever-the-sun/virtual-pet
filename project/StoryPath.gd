@@ -8,7 +8,9 @@ enum ACTIONS {
 	HISS,
 	NO_MOVE,
 	TIMEOUT,
-	BOTHER
+	BOTHER,
+	EMPTY,
+	MANUAL
 }
 
 var action_array: Array[ACTIONS]
@@ -52,6 +54,12 @@ func _init(params: String):
 						action_array.append(ACTIONS.TIMEOUT)
 					"BOTHER":
 						action_array.append(ACTIONS.BOTHER)
+					"EMPTY":
+						action_array.append(ACTIONS.EMPTY)
+					"":
+						action_array.append(ACTIONS.EMPTY)
+					"MANUAL":
+						action_array.append(ACTIONS.MANUAL)
 				var rest_of_string := path_raw_array[i].substr(action_end + 5)
 				if rest_of_string.find("?") != -1: # is a ternary operator
 					var split := rest_of_string.split(" ? ")
@@ -71,8 +79,7 @@ func get_next_line() -> String:
 		return description_array[line - 1]
 
 func parse_input(input: ACTIONS, flags: Dictionary = {}) -> String:
-	print("we are currently " + name)
-	print(action_array)
+	#print(action_array)
 	for i in action_array.size():
 		if action_array[i] == input:
 			if flags.has(alt_trigger_array[i]) and flags[alt_trigger_array[i]]:

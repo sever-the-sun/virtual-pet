@@ -44,7 +44,6 @@ func _physics_process(delta: float) -> void:
 		accel_mult = 0.25
 		sprite.play(&"jump")
 		
-	
 	move_and_slide()
 
 func _input(event: InputEvent) -> void:
@@ -54,3 +53,9 @@ func _input(event: InputEvent) -> void:
 			$AnimationPlayer.play(&"meow")
 		if Input.is_action_just_pressed(&"hiss"):
 			$AnimationPlayer.play(&"hiss")
+
+func make_noise(meowing: bool) -> void:
+	if meowing:
+		get_parent().meow()
+	else:
+		get_parent().hiss()

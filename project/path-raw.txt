@@ -1,16 +1,104 @@
-<initial-a>
-initial 1
 
-initial 2
-[NO_MOVE] -> initial-b
-[BOTHER] -> initial-c
+<day2-a>
+Good evening. Did I keep you waiting, dear?
+
+Sorry about that, {name}. You know, what with the...
+
+Ah, ignore me. How has your day been?
+[BOTHER] -> day2-bother
+[MEOW] -> day2-im-meow
+[HISS] -> day2-im-hiss
+[NO_MOVE] -> day2-im-nothing
+[TIMEOUT] -> day2-im-nothing
 =bother1
 ---
-<initial-b>
-no move
-[HISS] -> initial-a
+<day2-im-meow>
+That's good.
+[] -> day2-b
 ---
-<initial-c>
-bother
-[MEOW] -> initial-a
+<day2-im-hiss>
+That's a shame to hear.
+[] -> day2-b
+---
+<day2-im-nothing>
+Not talkative? Well, that's what you're here for.
+[] -> day2-b
+---
+<day2-b>
+Even for a short time each day, it's good to just let go, isn't it?
+[BOTHER] -> day2-bother
+[TIMEOUT] -> day2-c
+[NO_MOVE] -> day2-c
+=anim-head-tilt
+=pet
+---
+<day2-c>
+It's hard being a human sometimes.
+
+Well, haha, I suppose you should know all about it.
+
+I'm glad you're enjoying this.
+[BOTHER] -> day2-bother
+[TIMEOUT] -> day2-d
+[NO_MOVE] -> day2-c
+=anim-head-tilt-reverse
+---
+<day2-d>
+Well, sorry to leave you so soon but I think I need to take a shower.
+
+Sleep well, okay, {name}?
+[MANUAL] -> day3-a
+=anim-turn-away-reverse-conditional
+=day2-end
+---
+<day2-bother>
+Oh! That's my... work.
+
+Thanks for keeping me company.
+
+Can I talk to you about something?
+[MEOW] -> day2-bother-2
+[TIMEOUT] -> day2-nobother
+[NO_MOVE] -> day2-nobother
+=anim-head-tilt-reverse-conditional
+---
+<day2-bother-2>
+Sorry. I've been... tired.
+
+Forgive me if I can't dote on you like always.
+
+Everything I'm doing feels like it's... taken by rushing water.
+
+Like it slips through my fingers.
+
+Can you even hear me at all?
+
+...You don't have to answer that.
+[] -> day2-d
+=anim-turn-away
+=drag-off
+---
+<day2-nobother>
+Well, no need to get your little head tangled up in my mess.
+
+Don't worry about it, {name}.
+[] -> day2-d
+---
+<day3-a>
+Oh! I didn't expect you right now.
+
+Sorry, did you see anything...?
+
+Don't worry, darling, I...
+
+...
+
+Well, let me spoil you rotten, you mischievous thing.
+
+Just... stay here for a bit, okay?
+
+Good girl.
+[MANUAL] -> end
+=anim-wake-up
+=day3-end
 ---
