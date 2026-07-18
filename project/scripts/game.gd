@@ -1,5 +1,8 @@
 extends Node2D
 
+@onready var player: CharacterBody2D = $player
+
+
 var story_path_array: Array[StoryPath]
 var current_path: StoryPath
 
@@ -8,12 +11,14 @@ var flag_dict: Dictionary[String, bool] = {
 
 var accepting_next_line: bool = false
 
+
 @onready var window: Window = get_window()
 @onready var sub_window: Window = $sub_window
 
 @onready var dialogue_label: RichTextLabel = $sub_window/dialogue
 @onready var text_pass: Timer = $text_pass
 @onready var line_pass: Timer = $line_pass
+@onready var nothing_timer: Timer = $nothing_timer
 
 
 const RESOLUTIONS: Array[Vector2i] = [
@@ -62,10 +67,14 @@ func _input(event: InputEvent) -> void:
 			get_next_path(StoryPath.ACTIONS.HISS)
 
 func update_flags_before_dialogue(flag_array: Array[String]) -> void:
-	pass
+	print(flag_array)
 
 func update_flags_after_dialogue(flag_array: Array[String]) -> void:
-	pass
+	print(flag_array)
+	for flag in flag_array:
+		match flag:
+			"bother1":
+						$Area2D/CollisionShape2D.set_deferred(&"disabled", false)
 
 func next_path() -> void:
 	accepting_next_line = false
@@ -83,8 +92,17 @@ func next_path() -> void:
 	#
 	#if next_line:
 		#render_line(next_line)
-		update_flags_after_dialogue(current_path.flag_array)
+	update_flags_after_dialogue(current_path.flag_array)
 	accepting_next_line = true
+	nothing_timer.start()
+	player.has_not_moved = true
+
+func _on_nothing_timer_timeout() -> void:
+	if accepting_next_line:
+		if player.has_not_moved:
+			get_next_path(StoryPath.ACTIONS.NO_MOVE)
+		else:
+			get_next_path(StoryPath.ACTIONS.TIMEOUT)
 
 func render_line(text: String) -> void:
 	dialogue_label.text = text
@@ -110,3 +128,14 @@ func get_next_path(action: StoryPath.ACTIONS):
 			next_path()
 			return
 	assert(false, "we haven't found a match for destination, this should not happen")
+
+
+
+func _on_area_2d_body_entered(body: Node2D) -> void:
+	print("what")
+	print(body.is_in_group(&"player"))
+	print(accepting_next_line)
+	if accepting_next_line:
+		$Area2D/CollisionShape2D.set_deferred(&"disabled", true)
+		
+		get_next_path(StoryPath.ACTIONS.BOTHER)

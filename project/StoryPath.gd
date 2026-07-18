@@ -7,6 +7,7 @@ enum ACTIONS {
 	MEOW,
 	HISS,
 	NO_MOVE,
+	TIMEOUT,
 	BOTHER
 }
 
@@ -47,6 +48,8 @@ func _init(params: String):
 						action_array.append(ACTIONS.HISS)
 					"NO_MOVE":
 						action_array.append(ACTIONS.NO_MOVE)
+					"TIMEOUT":
+						action_array.append(ACTIONS.TIMEOUT)
 					"BOTHER":
 						action_array.append(ACTIONS.BOTHER)
 				var rest_of_string := path_raw_array[i].substr(action_end + 5)

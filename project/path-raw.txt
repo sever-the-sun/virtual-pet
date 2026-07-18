@@ -2,18 +2,15 @@
 initial 1
 
 initial 2
-[MEOW] -> initial-b
-[HISS] -> initial-c
+[NO_MOVE] -> initial-b
+[BOTHER] -> initial-c
+=bother1
 ---
 <initial-b>
-initial 3
-
-initial 4
-[HISS] -> initial-c
+no move
+[HISS] -> initial-a
 ---
 <initial-c>
-wah
-
-wah
+bother
 [MEOW] -> initial-a
 ---

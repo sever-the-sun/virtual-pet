@@ -3,10 +3,25 @@
 [sub_resource type="Environment" id="Environment_8kj3l"]
 ambient_light_energy = 0.0
 reflected_light_source = 1
-
-[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_ii47s"]
+fog_enabled = true
+fog_light_color = Color(0, 0, 0, 1)
+adjustment_enabled = true
 
 [sub_resource type="BoxMesh" id="BoxMesh_x2l7t"]
+size = Vector3(10, 1, 1)
+
+[sub_resource type="Shader" id="Shader_lbhrr"]
+code = "shader_type canvas_item;
+
+uniform float blur_amount; //: hint_range(0, 5);
+uniform sampler2D screen_texture : hint_screen_texture, filter_linear_mipmap;
+void fragment() {
+	COLOR =textureLod(screen_texture, SCREEN_UV, blur_amount);
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_w7nrf"]
+shader = SubResource("Shader_lbhrr")
+shader_parameter/blur_amount = 25.0
 
 [node name="real_world" type="Node3D" unique_id=1993769495]
 
@@ -15,11 +30,20 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.1289766)
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=394580494]
 environment = SubResource("Environment_8kj3l")
-camera_attributes = SubResource("CameraAttributesPractical_ii47s")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=169003894]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.7728263)
+transform = Transform3D(0.69926023, 0, 0.71486723, 0, 1, 0, -0.71486723, 0, 0.69926023, 0, 0, -5.0971246)
 mesh = SubResource("BoxMesh_x2l7t")
 
 [node name="AreaLight3D" type="AreaLight3D" parent="." unique_id=1528902267]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.2823224)
+
+[node name="filter_blur" type="ColorRect" parent="." unique_id=249800713]
+material = SubResource("ShaderMaterial_w7nrf")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 1280.0
+offset_bottom = 720.0
+grow_horizontal = 2
+grow_vertical = 2

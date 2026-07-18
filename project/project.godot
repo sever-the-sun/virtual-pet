@@ -23,12 +23,14 @@ window/size/viewport_height=720
 window/size/transparent=true
 window/size/sharp_corners=true
 window/size/maximize_disabled=true
-window/size/window_width_override=640
-window/size/window_height_override=360
 window/subwindows/embed_subwindows=false
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
 window/per_pixel_transparency/allowed=true
+
+[global_group]
+
+player=""
 
 [input]
 
