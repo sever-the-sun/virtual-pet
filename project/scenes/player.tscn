@@ -4,6 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://b4fubgvo4dxnt" path="res://assets/pet.png" id="2_g2els"]
 [ext_resource type="AudioStream" uid="uid://bv8bqivr7t548" path="res://assets/audio/hiss.wav" id="3_dqkch"]
 [ext_resource type="AudioStream" uid="uid://dvkm2ehkl0qgm" path="res://assets/audio/meow.wav" id="4_qlg0r"]
+[ext_resource type="Texture2D" uid="uid://bpnor0u0ts3qa" path="res://assets/eggshell.png" id="5_qlg0r"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_qhqgy"]
 atlas = ExtResource("2_g2els")
@@ -312,3 +313,15 @@ hit_from_inside = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1055071261]
 libraries/ = SubResource("AnimationLibrary_dqkch")
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="." unique_id=151959326]
+emitting = false
+amount = 5
+texture = ExtResource("5_qlg0r")
+one_shot = true
+explosiveness = 1.0
+randomness = 0.25
+direction = Vector2(0, -1)
+initial_velocity_min = 200.0
+initial_velocity_max = 200.0
+angle_max = 360.0

@@ -15,10 +15,13 @@ var input_hori: float = 0.0
 var accel_mult: float = 1.0
 
 @export var making_noise: bool = false
+@export var cutscene_no_move: bool = true
 
 var has_not_moved: bool = false
 
 func _physics_process(delta: float) -> void:
+	if cutscene_no_move:
+		return
 	if making_noise: # no move
 		input_hori = 0
 	
@@ -43,10 +46,12 @@ func _physics_process(delta: float) -> void:
 	else:
 		accel_mult = 0.25
 		sprite.play(&"jump")
-		
+
 	move_and_slide()
 
 func _input(event: InputEvent) -> void:
+	if cutscene_no_move:
+		return
 	input_hori = Input.get_axis(&"move_left", &"move_right")
 	if ray_cast.is_colliding():
 		if Input.is_action_just_pressed(&"meow"):

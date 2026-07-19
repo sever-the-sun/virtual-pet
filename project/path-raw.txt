@@ -1,4 +1,73 @@
+<day1-a>
+Ah, you're here.
+[] -> day1-aa
+=anim-focus
+---
+<day1-aa>
+Can you hear me?
+[NO_MOVE] -> day1-no-move
+[MEOW] -> day1-b
+[HISS] -> day1-b
+[TIMEOUT] -> day1-b
+=anim-look-closer
+---
+<day1-no-move>
+Don't be coy, dear.
+[] -> day1-c
+=pet
+---
+<day1-b>
+Delightful.
+[] -> day1-c
+=pet
+---
+<day1-c>
+How are you?
+[MEOW] -> day1-im-meow
+[HISS] -> day1-im-hiss
+[NO_MOVE] -> day1-im-no-move
+[TIMEOUT] -> day1-im-timeout
+=anim-look-reasonable
+---
+<day1-im-meow>
+That's sweet.
+[] -> day1-d
+=named-meow
+---
+<day1-im-hiss>
+That's adorable.
+[] -> day1-d
+=named-hiss
+---
+<day1-im-no-move>
+How cute.
+[] -> day1-d
+=named-no-move
+---
+<day1-im-timeout>
+How cute.
+[] -> day1-d
+=named-timeout
+---
+<day1-d>
+It's very cute to see you like this, so small.
 
+I just need to clean up a few things, and then I can spoil you rotten. Okay?
+[MEOW] -> day1-goodgirl
+[TIMEOUT] -> day1-e
+[NO_MOVE] -> day1-e
+=shake
+=day1-open-files
+---
+<day1-goodgirl>
+Good girl, {name}.
+[] -> day1-e
+---
+<day1-e>
+Love you.
+[MANUAL] -> day2-a
+=day1-end
+---
 <day2-a>
 Good evening. Did I keep you waiting, dear?
 
@@ -40,7 +109,7 @@ Well, haha, I suppose you should know all about it.
 I'm glad you're enjoying this.
 [BOTHER] -> day2-bother
 [TIMEOUT] -> day2-d
-[NO_MOVE] -> day2-c
+[NO_MOVE] -> day2-d
 =anim-head-tilt-reverse
 ---
 <day2-d>
@@ -77,6 +146,7 @@ Can you even hear me at all?
 [] -> day2-d
 =anim-turn-away
 =drag-off
+=good_ending
 ---
 <day2-nobother>
 Well, no need to get your little head tangled up in my mess.
@@ -99,6 +169,5 @@ Just... stay here for a bit, okay?
 
 Good girl.
 [MANUAL] -> end
-=anim-wake-up
 =day3-end
 ---
