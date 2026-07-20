@@ -56,13 +56,15 @@ func _process(delta: float) -> void:
 	
 	if $AnimationPlayer.is_playing() && $cursor.position.distance_squared_to(player.position) > 160^2:
 		unpet()
-		
+	
 func _on_window_size_changed() -> void:
 	
 	sub_window.size = window.size + Vector2i(Vector2(400,600) * (window.size.x / 1280.0))
 	$sub_window/Node2D.scale = Vector2.ONE * (window.size.x / 1280.0)
 	#dialogue_label.scale = Vector2.ONE * (window.size.x / 1280.0)
-	dialogue_label[&"theme_override_font_sizes/normal_font_size"] = 48 * int(window.size.x / 1280.0)
+	dialogue_label[&"theme_override_font_sizes/normal_font_size"] = int(roundf(48 * window.size.x / 1280.0))
+	#print(48 * int(window.size.x / 1280.0))
+	
 	#print(int(window.size.x / 1280.0))
 func _on_window_focus_entered() -> void:
 	pass
@@ -74,6 +76,7 @@ func _on_window_focus_exited() -> void:
 
 func _on_option_button_item_selected(index: int) -> void:
 	window.size = RESOLUTIONS[index]
+	await get_tree().create_timer(0.05).timeout
 	_on_window_size_changed()
 #func _input(event: InputEvent) -> void:
 	#
@@ -152,9 +155,9 @@ func update_flags_after_dialogue(flag_array: Array[String]) -> void:
 			"named-hiss":
 				name = "Flora"
 			"named-no-move":
-				name = "Eva"
-			"named-timeout":
 				name = "Lily"
+			"named-timeout":
+				name = "Eva"
 			"good_ending":
 				good_ending = true
 func next_path() -> void:
@@ -204,7 +207,7 @@ func render_line(text: String) -> void:
 			text_pass.wait_time = 0.5
 		else:
 			text_pass.wait_time = 0.05
-		text_pass.wait_time *= 0.1
+		#text_pass.wait_time *= 0.1
 		text_pass.start()
 		await text_pass.timeout
 
@@ -234,29 +237,34 @@ func new_day(day: int) -> void:
 			$day_anims.play(&"day1")
 			await $day_anims.animation_finished
 			next_path()
-		4:
+		2:
 			await get_tree().create_timer(1).timeout
 			$day_anims.play(&"turnoff")
 			
 			await get_tree().create_timer(1).timeout
+			player.position.y = 696
 			$cursor.position = Vector2(598.0, 275.0)
+			$open_text.show()
+			$open_text/CollisionShape2D.set_deferred(&"disabled",false)
 			await $day_anims.animation_finished
 			await get_tree().create_timer(1).timeout
 			get_next_path(StoryPath.ACTIONS.MANUAL)
 		3:
 			$day_anims.play(&"turnoff")
 			await get_tree().create_timer(1).timeout
+			$open_text.hide()
+			$open_text/CollisionShape2D.set_deferred(&"disabled",true)
 			user_bg.hide()
-			$sub_window/lazy_chair.show()
+			$sub_window/Node2D/lazy_chair.show()
 			await $day_anims.animation_finished
 			user.play(&"wake-up-a")
 			await user.animation_finished
 			user_bg.show()
-			$sub_window/lazy_chair.hide()
+			$sub_window/Node2D/lazy_chair.hide()
 			user.play(&"wake-up-b")
 			await user.animation_finished
 			get_next_path(StoryPath.ACTIONS.MANUAL)
-		2:
+		4:
 			await get_tree().create_timer(1).timeout
 			$day_anims.play(&"turnoff_day4")
 			
@@ -298,6 +306,7 @@ func _on_ending_body_entered(body: Node2D) -> void:
 	else:
 		user.play(&"turnoff")
 		await user.animation_finished
-		$sfx.play()
-		$pure_black_fg.show()
-		$pure_black_fg.modulate = Color.BLACK
+		$day_anims.play(&"bad_end")
+		#$sfx.play()
+		#$pure_black_fg.show()
+		#$pure_black_fg.modulate = Color.BLACK

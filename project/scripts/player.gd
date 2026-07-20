@@ -21,6 +21,7 @@ var has_not_moved: bool = false
 
 func _physics_process(delta: float) -> void:
 	if cutscene_no_move:
+		input_hori = 0
 		return
 	if making_noise: # no move
 		input_hori = 0

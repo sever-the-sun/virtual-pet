@@ -238,7 +238,24 @@
 [ext_resource type="AudioStream" uid="uid://ke6s304ul0vf" path="res://assets/audio/crack.wav" id="233_hq3h4"]
 [ext_resource type="AudioStream" uid="uid://dpylhj2q6skba" path="res://assets/audio/rollover1.ogg" id="234_hq3h4"]
 [ext_resource type="AudioStream" uid="uid://xt8xbjm2rtm5" path="res://assets/audio/rollover1-pitchdown.ogg" id="235_iy3bn"]
+[ext_resource type="Texture2D" uid="uid://cp65sd8yh7vpq" path="res://assets/desktop/application-pdf.svg" id="235_rwqnn"]
+[ext_resource type="Texture2D" uid="uid://d0tadiebwhs86" path="res://assets/desktop/red-folder-vm.svg" id="236_3e2xi"]
 [ext_resource type="AudioStream" uid="uid://du1huothqdvx2" path="res://assets/audio/switch33.ogg" id="236_va6gw"]
+[ext_resource type="Texture2D" uid="uid://hoou8adglaco" path="res://assets/desktop/printer1.svg" id="237_13sc1"]
+[ext_resource type="Texture2D" uid="uid://bjv4d6i1b11cj" path="res://assets/desktop/network-vpn.svg" id="238_5a2j0"]
+[ext_resource type="Texture2D" uid="uid://dc32qxb8g85h7" path="res://assets/desktop/encrypted.svg" id="239_bwgkb"]
+[ext_resource type="Texture2D" uid="uid://bljvqdxlclpgx" path="res://assets/desktop/red-folder-download.svg" id="240_1xm1f"]
+[ext_resource type="Texture2D" uid="uid://d2u4mc5hhyvqy" path="res://assets/desktop/text-x-c++.svg" id="241_gmgdt"]
+[ext_resource type="Texture2D" uid="uid://135jhu83g5ou" path="res://assets/desktop/gddoc.svg" id="242_36io8"]
+[ext_resource type="Texture2D" uid="uid://c6vxgewrw387u" path="res://assets/desktop/application-image-tiff.svg" id="243_pcasu"]
+[ext_resource type="Texture2D" uid="uid://d3a6j1gqfhlxo" path="res://assets/desktop/application-archive-zip.svg" id="244_khak0"]
+[ext_resource type="Texture2D" uid="uid://dpwhb353ywk2p" path="res://assets/desktop/application-video.svg" id="245_sy3rc"]
+[ext_resource type="Texture2D" uid="uid://chckghw8myidv" path="res://assets/desktop/application-table.svg" id="246_1yrp2"]
+[ext_resource type="Texture2D" uid="uid://dqt5600nt4p4e" path="res://assets/desktop/application-x-gameboy-rom.svg" id="247_m0uyi"]
+[ext_resource type="Texture2D" uid="uid://2dhmusny5jlg" path="res://assets/desktop/application-image-gif.svg" id="248_pcasu"]
+[ext_resource type="Texture2D" uid="uid://devjvpfuawbww" path="res://assets/desktop/application-epub+zip.svg" id="249_khak0"]
+[ext_resource type="Texture2D" uid="uid://s7ljntclana4" path="res://assets/desktop/text-html.svg" id="250_sy3rc"]
+[ext_resource type="Texture2D" uid="uid://d2arepqoyu5uh" path="res://assets/desktop/image-x-win-bitmap.svg" id="251_1yrp2"]
 
 [sub_resource type="Gradient" id="Gradient_xsid7"]
 offsets = PackedFloat32Array(0)
@@ -1013,6 +1030,10 @@ border_blend = true
 font = ExtResource("229_efgwv")
 font_size = 24
 
+[sub_resource type="FontVariation" id="FontVariation_ii47s"]
+base_font = ExtResource("229_efgwv")
+spacing_bottom = 3
+
 [sub_resource type="FontVariation" id="FontVariation_vjgfe"]
 base_font = ExtResource("4_u5sy4")
 spacing_glyph = 6
@@ -1028,6 +1049,22 @@ normal = Vector2(1, 0)
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_lbhrr"]
 normal = Vector2(-1, 0)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_x2l7t"]
+a = Vector2(350, 0)
+b = Vector2(-350, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8kj3l"]
+bg_color = Color(0.12156863, 0.12156863, 0.12156863, 1)
+border_width_left = 1
+border_width_top = 80
+border_width_right = 1
+border_width_bottom = 2
+border_color = Color(0.24, 0.24, 0.24, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_pcasu"]
+font_size = 14
+outline_size = 4
 
 [sub_resource type="Shader" id="Shader_p57ef"]
 code = "shader_type canvas_item;
@@ -1088,7 +1125,7 @@ shader_parameter/bloom_intensity = 0.5
 shader_parameter/blur_amount = 1.0000000475
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8kj3l"]
-size = Vector2(448, 128)
+size = Vector2(564, 128)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_p2lbs"]
 size = Vector2(64, 400)
@@ -1493,6 +1530,49 @@ tracks/28/keys = {
 "update": 1,
 "values": [ExtResource("236_va6gw")]
 }
+
+[sub_resource type="Animation" id="Animation_va6gw"]
+resource_name = "bad_end"
+step = 1.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("pure_black_fg:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("pure_black_fg:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 0, 0, 1)]
+}
+tracks/2/type = "audio"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("sfx")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"clips": [{
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("236_va6gw")
+}],
+"times": PackedFloat32Array(0)
+}
+tracks/2/use_blend = true
 
 [sub_resource type="Animation" id="Animation_cbnbf"]
 resource_name = "day1"
@@ -2125,6 +2205,7 @@ tracks/14/keys = {
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_vjgfe"]
 _data = {
 &"RESET": SubResource("Animation_hq3h4"),
+&"bad_end": SubResource("Animation_va6gw"),
 &"day1": SubResource("Animation_cbnbf"),
 &"turnoff": SubResource("Animation_xsid7"),
 &"turnoff_day4": SubResource("Animation_p2lbs")
@@ -2148,7 +2229,6 @@ maximize_disabled = true
 
 [node name="background" type="TextureRect" parent="sub_window" unique_id=955185474]
 visible = false
-modulate = Color(1, 1, 1, 0)
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -2253,6 +2333,7 @@ grow_vertical = 2
 texture = ExtResource("229_hq3h4")
 
 [node name="options_rect" type="Panel" parent="title" unique_id=543789561]
+visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -2320,21 +2401,58 @@ anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -200.0
 offset_top = -144.0
-offset_right = 200.0
+offset_right = 440.0
 offset_bottom = 256.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_hq3h4")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="title/credits_rect" unique_id=1295862241]
+[node name="Label" type="Label" parent="title/credits_rect" unique_id=1716496284]
+visible = false
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="Label" type="Label" parent="title/credits_rect/VBoxContainer" unique_id=1716496284]
-layout_mode = 2
-text = "Window Size"
+offset_right = 578.0
+offset_bottom = 369.0
+text = " Bloom shader by flora stewart, ported by vegameta
+ https://godotshaders.com/shader/bloom/
+ Zerove by GGBotNet
+ https://ggbot.itch.io/ggbotnet-fonts-cc0
+ Various assets by Kenney
+ https://www.kenney.nl/
+ White Moon by AlkaKrab
+ https://alkakrab.itch.io/game-piano-music-pack
+ material-black COLORS by rtl88
+ https://store.kde.org/s/KDE%20Store/p/1333360
+ Characters PSX by Elbolilloduro
+ https://elbolilloduro.itch.io/characters-psx"
 label_settings = SubResource("LabelSettings_hq3h4")
+
+[node name="TextEdit" type="TextEdit" parent="title/credits_rect" unique_id=741111859]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_readonly_color = Color(18.892157, 18.892157, 18.892157, 1)
+theme_override_fonts/font = SubResource("FontVariation_ii47s")
+theme_override_font_sizes/font_size = 20
+text = "Bloom shader by flora stewart, ported by vegameta
+https://godotshaders.com/shader/bloom/
+Zerove by GGBotNet
+https://ggbot.itch.io/ggbotnet-fonts-cc0
+Various assets by Kenney
+https://www.kenney.nl/
+White Moon by AlkaKrab
+https://alkakrab.itch.io/game-piano-music-pack
+material-black COLORS by rtl88
+https://store.kde.org/s/KDE%20Store/p/1333360
+Characters PSX by Elbolilloduro
+https://elbolilloduro.itch.io/characters-psx"
+editable = false
+context_menu_enabled = false
+emoji_menu_enabled = false
+shortcut_keys_enabled = false
+virtual_keyboard_enabled = false
 
 [node name="Label" type="Label" parent="title" unique_id=1347700128]
 layout_mode = 1
@@ -2412,10 +2530,6 @@ shape = SubResource("WorldBoundaryShape2D_iywne")
 position = Vector2(640, 0)
 shape = SubResource("WorldBoundaryShape2D_lbhrr")
 
-[node name="player" parent="." unique_id=318196448 instance=ExtResource("4_iywne")]
-visible = false
-position = Vector2(640, 392)
-
 [node name="desktop_initial" type="Node2D" parent="." unique_id=63402904]
 visible = false
 
@@ -2423,133 +2537,341 @@ visible = false
 position = Vector2(40, 120)
 metadata/_edit_group_ = true
 
+[node name="Label" parent="desktop_initial/desktop_item" index="2" unique_id=867877624]
+text = "background"
+
 [node name="desktop_item2" parent="desktop_initial" unique_id=1072110981 instance=ExtResource("5_iywne")]
 position = Vector2(40, 200)
 metadata/_edit_group_ = true
+
+[node name="Label" parent="desktop_initial/desktop_item2" index="2" unique_id=867877624]
+text = "resumes"
 
 [node name="desktop_item3" parent="desktop_initial" unique_id=1316905591 instance=ExtResource("5_iywne")]
 position = Vector2(120, 120)
 metadata/_edit_group_ = true
 
+[node name="Label" parent="desktop_initial/desktop_item3" index="2" unique_id=867877624]
+text = "ttrpgs"
+
 [node name="desktop_item4" parent="desktop_initial" unique_id=1249216872 instance=ExtResource("5_iywne")]
 position = Vector2(120, 200)
 metadata/_edit_group_ = true
+
+[node name="Sprite2D" parent="desktop_initial/desktop_item4" index="1" unique_id=1465082647]
+texture = ExtResource("235_rwqnn")
+
+[node name="Label" parent="desktop_initial/desktop_item4" index="2" unique_id=867877624]
+text = "diy hrt.pdf"
 
 [node name="desktop_item5" parent="desktop_initial" unique_id=382144972 instance=ExtResource("5_iywne")]
 position = Vector2(200, 40)
 metadata/_edit_group_ = true
 
+[node name="Sprite2D" parent="desktop_initial/desktop_item5" index="1" unique_id=1465082647]
+texture = ExtResource("236_3e2xi")
+
+[node name="Label" parent="desktop_initial/desktop_item5" index="2" unique_id=867877624]
+text = "vm"
+
 [node name="desktop_item6" parent="desktop_initial" unique_id=49228565 instance=ExtResource("5_iywne")]
 position = Vector2(200, 120)
 metadata/_edit_group_ = true
+
+[node name="Sprite2D" parent="desktop_initial/desktop_item6" index="1" unique_id=1465082647]
+texture = ExtResource("237_13sc1")
+
+[node name="Label" parent="desktop_initial/desktop_item6" index="2" unique_id=867877624]
+text = "My Printer"
 
 [node name="desktop_item7" parent="desktop_initial" unique_id=2097598632 instance=ExtResource("5_iywne")]
 position = Vector2(200, 200)
 metadata/_edit_group_ = true
 
+[node name="Sprite2D" parent="desktop_initial/desktop_item7" index="1" unique_id=1465082647]
+texture = ExtResource("238_5a2j0")
+
+[node name="Label" parent="desktop_initial/desktop_item7" index="2" unique_id=867877624]
+text = "HellVPN"
+
 [node name="desktop_item8" parent="desktop_initial" unique_id=2007723303 instance=ExtResource("5_iywne")]
 position = Vector2(280, 120)
 metadata/_edit_group_ = true
+
+[node name="Label" parent="desktop_initial/desktop_item8" index="2" unique_id=867877624]
+text = "hot photos"
 
 [node name="desktop_item9" parent="desktop_initial" unique_id=1662445527 instance=ExtResource("5_iywne")]
 position = Vector2(360, 120)
 metadata/_edit_group_ = true
 
+[node name="Sprite2D" parent="desktop_initial/desktop_item9" index="1" unique_id=1465082647]
+texture = ExtResource("239_bwgkb")
+
+[node name="Label" parent="desktop_initial/desktop_item9" index="2" unique_id=867877624]
+text = "petleash"
+
 [node name="desktop_item10" parent="desktop_initial" unique_id=693080359 instance=ExtResource("5_iywne")]
 position = Vector2(360, 200)
 metadata/_edit_group_ = true
+
+[node name="Sprite2D" parent="desktop_initial/desktop_item10" index="1" unique_id=1465082647]
+texture = ExtResource("240_1xm1f")
+
+[node name="Label" parent="desktop_initial/desktop_item10" index="2" unique_id=867877624]
+text = "Downloads"
 
 [node name="desktop_item11" parent="desktop_initial" unique_id=1500655125 instance=ExtResource("5_iywne")]
 position = Vector2(440, 40)
 metadata/_edit_group_ = true
 
+[node name="Sprite2D" parent="desktop_initial/desktop_item11" index="1" unique_id=1465082647]
+texture = ExtResource("241_gmgdt")
+
+[node name="Label" parent="desktop_initial/desktop_item11" index="2" unique_id=867877624]
+text = "petleasher_lib.cpp"
+
 [node name="desktop_item12" parent="desktop_initial" unique_id=682899487 instance=ExtResource("5_iywne")]
 position = Vector2(440, 120)
 metadata/_edit_group_ = true
+
+[node name="Sprite2D" parent="desktop_initial/desktop_item12" index="1" unique_id=1465082647]
+texture = ExtResource("242_36io8")
+
+[node name="Label" parent="desktop_initial/desktop_item12" index="2" unique_id=867877624]
+text = "Untitled Document (1)"
 
 [node name="desktop_item13" parent="desktop_initial" unique_id=1909825739 instance=ExtResource("5_iywne")]
 position = Vector2(520, 120)
 metadata/_edit_group_ = true
 
+[node name="Sprite2D" parent="desktop_initial/desktop_item13" index="1" unique_id=1465082647]
+texture = ExtResource("243_pcasu")
+
+[node name="Label" parent="desktop_initial/desktop_item13" index="2" unique_id=867877624]
+text = "I am my own parabolic antenna the strength of my signal is decided by my own level of gratitude its a matter of my resolve its a matter of admiration its a matter of dedication.png
+"
+
 [node name="desktop_item14" parent="desktop_initial" unique_id=771205512 instance=ExtResource("5_iywne")]
-position = Vector2(520, 120)
+position = Vector2(520, 440)
 metadata/_edit_group_ = true
+
+[node name="Label" parent="desktop_initial/desktop_item14" index="2" unique_id=867877624]
+text = "New folder (5)"
 
 [node name="desktop_item15" parent="desktop_initial" unique_id=2146111174 instance=ExtResource("5_iywne")]
 position = Vector2(600, 40)
 metadata/_edit_group_ = true
 
+[node name="Sprite2D" parent="desktop_initial/desktop_item15" index="1" unique_id=1465082647]
+texture = ExtResource("244_khak0")
+
+[node name="Label" parent="desktop_initial/desktop_item15" index="2" unique_id=867877624]
+text = "games wo emuls"
+
 [node name="desktop_item16" parent="desktop_initial" unique_id=1998328137 instance=ExtResource("5_iywne")]
 position = Vector2(600, 120)
 metadata/_edit_group_ = true
+
+[node name="Label" parent="desktop_initial/desktop_item16" index="2" unique_id=867877624]
+text = "games with emuls"
 
 [node name="desktop_item17" parent="desktop_initial" unique_id=266330035 instance=ExtResource("5_iywne")]
 position = Vector2(600, 200)
 metadata/_edit_group_ = true
 
+[node name="Label" parent="desktop_initial/desktop_item17" index="2" unique_id=867877624]
+text = "emuls"
+
 [node name="desktop_item18" parent="desktop_initial" unique_id=1481280701 instance=ExtResource("5_iywne")]
 position = Vector2(760, 40)
 metadata/_edit_group_ = true
+
+[node name="Label" parent="desktop_initial/desktop_item18" index="2" unique_id=867877624]
+text = "ttrpgs"
 
 [node name="desktop_item19" parent="desktop_initial" unique_id=534013712 instance=ExtResource("5_iywne")]
 position = Vector2(840, 120)
 metadata/_edit_group_ = true
 
+[node name="Sprite2D" parent="desktop_initial/desktop_item19" index="1" unique_id=1465082647]
+texture = ExtResource("245_sy3rc")
+
+[node name="Label" parent="desktop_initial/desktop_item19" index="2" unique_id=867877624]
+text = "tgirl frotting sesh.m4a"
+
 [node name="desktop_item20" parent="desktop_initial" unique_id=1457768429 instance=ExtResource("5_iywne")]
 position = Vector2(840, 200)
 metadata/_edit_group_ = true
+
+[node name="Sprite2D" parent="desktop_initial/desktop_item20" index="1" unique_id=1465082647]
+texture = ExtResource("246_1yrp2")
+
+[node name="Label" parent="desktop_initial/desktop_item20" index="2" unique_id=867877624]
+text = "music"
 
 [node name="desktop_item21" parent="desktop_initial" unique_id=1408566529 instance=ExtResource("5_iywne")]
 position = Vector2(840, 280)
 metadata/_edit_group_ = true
 
+[node name="Sprite2D" parent="desktop_initial/desktop_item21" index="1" unique_id=1465082647]
+texture = ExtResource("247_m0uyi")
+
+[node name="Label" parent="desktop_initial/desktop_item21" index="2" unique_id=867877624]
+text = "mantle"
+
 [node name="desktop_item22" parent="desktop_initial" unique_id=1775362118 instance=ExtResource("5_iywne")]
 position = Vector2(840, 360)
 metadata/_edit_group_ = true
+
+[node name="Sprite2D" parent="desktop_initial/desktop_item22" index="1" unique_id=1465082647]
+texture = ExtResource("235_rwqnn")
+
+[node name="Label" parent="desktop_initial/desktop_item22" index="2" unique_id=867877624]
+text = "resume (1).pdf"
 
 [node name="desktop_item23" parent="desktop_initial" unique_id=2134125195 instance=ExtResource("5_iywne")]
 position = Vector2(920, 40)
 metadata/_edit_group_ = true
 
+[node name="Sprite2D" parent="desktop_initial/desktop_item23" index="1" unique_id=1465082647]
+texture = ExtResource("235_rwqnn")
+
+[node name="Label" parent="desktop_initial/desktop_item23" index="2" unique_id=867877624]
+text = "Solmaz_and_the_Maw.pdf"
+
 [node name="desktop_item24" parent="desktop_initial" unique_id=1384811704 instance=ExtResource("5_iywne")]
 position = Vector2(920, 120)
 metadata/_edit_group_ = true
+
+[node name="Sprite2D" parent="desktop_initial/desktop_item24" index="1" unique_id=1465082647]
+texture = ExtResource("248_pcasu")
+
+[node name="Label" parent="desktop_initial/desktop_item24" index="2" unique_id=867877624]
+text = "cat flipping you off"
 
 [node name="desktop_item25" parent="desktop_initial" unique_id=1152273589 instance=ExtResource("5_iywne")]
 position = Vector2(920, 280)
 metadata/_edit_group_ = true
 
+[node name="Label" parent="desktop_initial/desktop_item25" index="2" unique_id=867877624]
+text = "reaction gifs"
+
 [node name="desktop_item26" parent="desktop_initial" unique_id=1594472968 instance=ExtResource("5_iywne")]
 position = Vector2(1000, 200)
 metadata/_edit_group_ = true
+
+[node name="Label" parent="desktop_initial/desktop_item26" index="2" unique_id=867877624]
+text = "backup"
 
 [node name="desktop_item27" parent="desktop_initial" unique_id=1852485132 instance=ExtResource("5_iywne")]
 position = Vector2(1000, 280)
 metadata/_edit_group_ = true
 
+[node name="Sprite2D" parent="desktop_initial/desktop_item27" index="1" unique_id=1465082647]
+texture = ExtResource("244_khak0")
+
+[node name="Label" parent="desktop_initial/desktop_item27" index="2" unique_id=867877624]
+text = "backup"
+
 [node name="desktop_item28" parent="desktop_initial" unique_id=1405738787 instance=ExtResource("5_iywne")]
 position = Vector2(1080, 200)
 metadata/_edit_group_ = true
+
+[node name="Label" parent="desktop_initial/desktop_item28" index="2" unique_id=867877624]
+text = "synthesizers (pirated)"
 
 [node name="desktop_item29" parent="desktop_initial" unique_id=220511688 instance=ExtResource("5_iywne")]
 position = Vector2(1160, 40)
 metadata/_edit_group_ = true
 
+[node name="Sprite2D" parent="desktop_initial/desktop_item29" index="1" unique_id=1465082647]
+texture = ExtResource("249_khak0")
+
+[node name="Label" parent="desktop_initial/desktop_item29" index="2" unique_id=867877624]
+text = "drabbles.epub"
+
 [node name="desktop_item30" parent="desktop_initial" unique_id=1283606650 instance=ExtResource("5_iywne")]
 position = Vector2(1160, 120)
 metadata/_edit_group_ = true
+
+[node name="Sprite2D" parent="desktop_initial/desktop_item30" index="1" unique_id=1465082647]
+texture = ExtResource("250_sy3rc")
+
+[node name="Label" parent="desktop_initial/desktop_item30" index="2" unique_id=867877624]
+text = "How to crack your friend's egg_.html"
 
 [node name="desktop_item31" parent="desktop_initial" unique_id=424962875 instance=ExtResource("5_iywne")]
 position = Vector2(1240, 40)
 metadata/_edit_group_ = true
 
+[node name="Label" parent="desktop_initial/desktop_item31" index="2" unique_id=867877624]
+text = "eggcrackingstrats"
+
 [node name="desktop_item32" parent="desktop_initial" unique_id=1222547600 instance=ExtResource("5_iywne")]
 position = Vector2(1240, 120)
 metadata/_edit_group_ = true
 
+[node name="Sprite2D" parent="desktop_initial/desktop_item32" index="1" unique_id=1465082647]
+texture = ExtResource("251_1yrp2")
+
+[node name="Label" parent="desktop_initial/desktop_item32" index="2" unique_id=867877624]
+text = "hey_lovely_girl_rizz"
+
 [node name="desktop_item33" parent="desktop_initial" unique_id=670847580 instance=ExtResource("5_iywne")]
 position = Vector2(1240, 280)
 metadata/_edit_group_ = true
+
+[node name="Label" parent="desktop_initial/desktop_item33" index="2" unique_id=867877624]
+text = "new New folder"
+
+[node name="open_text" type="StaticBody2D" parent="." unique_id=1156376956]
+visible = false
+position = Vector2(1052, 372)
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="open_text" unique_id=1963293069]
+position = Vector2(0, 250)
+shape = SubResource("SegmentShape2D_x2l7t")
+disabled = true
+
+[node name="Panel" type="Panel" parent="open_text" unique_id=693354117]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -350.0
+offset_top = -250.0
+offset_right = 350.0
+offset_bottom = 250.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_8kj3l")
+
+[node name="Label" type="Label" parent="open_text/Panel" unique_id=1992391890]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(-1, 1)
+pivot_offset_ratio = Vector2(0.5, 0.5)
+text = "
+
+
+
+“The bird fights its way out of the egg. The egg is the world. Whoever will be born must destroy a world. The bird flies to God. The name of the god is Abraxas.”
+I sank into deep meditation after I had read the words through several times. It admitted of no doubt: this was Demian’s answer. None could know of the bird, except our two selves. He had received my picture. He had understood and helped me to explain its significance. But where was the connection in all this? And—what worried me above all—what did Abraxas mean? I had never read or heard of the word. “The name of the god is Abraxas!”
+The hour passed without my hearing anything of the lesson. The next lesson began, the last of the morning. It was taken by quite a young assistant master, fresh from the University, to whom we had already taken a liking, because he was young and pretended to no false dignity with us.
+We were reading Herodotus under Doctor Follen’s guidance. This was one of the few school subjects which interested me. But this time my attention wandered. I had mechanically flung open my book, but I did not follow the translation, and remained lost in thought. For the rest, I had already several times had the experience that what Demian had said to me in the confirmation class was right. If you willed a thing strongly enough, it happened. You're not supposed to read this, friend."
+label_settings = SubResource("LabelSettings_pcasu")
+autowrap_mode = 2
+
+[node name="player" parent="." unique_id=318196448 instance=ExtResource("4_iywne")]
+visible = false
+position = Vector2(640, 392)
 
 [node name="cursor" type="Marker2D" parent="." unique_id=1085328168]
 visible = false
@@ -2587,18 +2909,19 @@ wait_time = 0.05
 one_shot = true
 
 [node name="line_pass" type="Timer" parent="." unique_id=739941819]
+wait_time = 1.5
 one_shot = true
 
 [node name="nothing_timer" type="Timer" parent="." unique_id=2122438354]
-wait_time = 5.0
+wait_time = 4.0
 one_shot = true
 
 [node name="Area2D" type="Area2D" parent="." unique_id=835313170]
-position = Vector2(326, 651)
+position = Vector2(1062, 536)
 metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=168750284]
-position = Vector2(-96, 0)
+position = Vector2(-68, 0)
 shape = SubResource("RectangleShape2D_8kj3l")
 disabled = true
 
@@ -2619,6 +2942,7 @@ libraries/ = SubResource("AnimationLibrary_hq3h4")
 
 [node name="day_anims" type="AnimationPlayer" parent="." unique_id=1735560552]
 libraries/ = SubResource("AnimationLibrary_vjgfe")
+speed_scale = 3.0
 
 [node name="music" type="AudioStreamPlayer" parent="." unique_id=774591005]
 stream = ExtResource("233_efgwv")
@@ -2637,7 +2961,6 @@ stream = ExtResource("236_va6gw")
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
 [connection signal="body_entered" from="ending" to="." method="_on_ending_body_entered"]
 
-[editable path="player"]
 [editable path="desktop_initial/desktop_item"]
 [editable path="desktop_initial/desktop_item2"]
 [editable path="desktop_initial/desktop_item3"]
@@ -2671,3 +2994,4 @@ stream = ExtResource("236_va6gw")
 [editable path="desktop_initial/desktop_item31"]
 [editable path="desktop_initial/desktop_item32"]
 [editable path="desktop_initial/desktop_item33"]
+[editable path="player"]
